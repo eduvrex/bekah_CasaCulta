@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Casa Culta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -527,6 +530,200 @@
       }
       .hero-buttons { flex-direction: column; align-items: flex-start; gap: 16px; }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       WHY / STATS
+    ═══════════════════════════════════════════════════════════ */
+    .why {
+      background: #141410;
+      padding: 84px 44px;
+      text-align: center;
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .why-lead {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(24px, 3.4vw, 42px);
+      line-height: 1.25;
+      max-width: 820px;
+      margin: 0 auto 18px;
+    }
+    .why-sub {
+      display: inline-block;
+      font-size: 10px; letter-spacing: 0.28em;
+      opacity: 0.55; text-transform: uppercase;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--red);
+      margin-bottom: 52px;
+    }
+    .stats {
+      display: flex; justify-content: center;
+      gap: 56px; flex-wrap: wrap;
+      max-width: 920px; margin: 0 auto;
+    }
+    .stat { max-width: 230px; }
+    .stat .num {
+      font-family: 'Beth Ellen', cursive;
+      font-size: clamp(46px, 5.6vw, 74px);
+      font-weight: 400; line-height: 1.15;
+      letter-spacing: 0;
+    }
+    .stat .num .accent { color: var(--red); }
+    .stat .lbl {
+      margin-top: 16px; font-size: 11px;
+      line-height: 1.6; opacity: 0.6;
+      letter-spacing: 0.04em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MISSION / VISION
+    ═══════════════════════════════════════════════════════════ */
+    .mv {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(240,235,224,0.08);
+    }
+    .mv > div { background: var(--dark); padding: 76px 52px; }
+    .mv .vision { background: #141410; }
+    .mv .eyebrow {
+      font-size: 10px; letter-spacing: 0.28em;
+      opacity: 0.5; margin-bottom: 22px; text-transform: uppercase;
+    }
+    .mv h2 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 400; font-style: italic;
+      line-height: 1.15; margin-bottom: 22px;
+    }
+    .mv p {
+      font-size: 15px; line-height: 1.75;
+      opacity: 0.74; max-width: 460px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       INSIDE THE CASA
+    ═══════════════════════════════════════════════════════════ */
+    .inside {
+      padding: 84px 44px;
+      background: #141410;
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .inside-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 64px;
+    }
+    .inside-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 6px 18px;
+      padding: 26px 0;
+      border-bottom: 1px solid rgba(240,235,224,0.1);
+    }
+    .inside-item .idx {
+      font-size: 12px; opacity: 0.4;
+      letter-spacing: 0.1em; padding-top: 3px;
+    }
+    .inside-item h4 {
+      font-size: 13px; letter-spacing: 0.16em;
+      text-transform: uppercase; font-weight: 400;
+    }
+    .inside-item p {
+      grid-column: 2;
+      font-size: 13px; line-height: 1.65;
+      opacity: 0.58; margin-top: 8px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PRICING / MEMBERSHIP TIERS
+    ═══════════════════════════════════════════════════════════ */
+    .pricing {
+      padding: 84px 44px;
+      background: var(--dark);
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .pricing .section-head {
+      text-align: center; margin-bottom: 48px;
+    }
+    .pricing .section-head h3 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 400; font-style: italic;
+    }
+    .pricing .section-head p {
+      margin-top: 12px; font-size: 11px;
+      letter-spacing: 0.18em; opacity: 0.5; text-transform: uppercase;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1080px; margin: 0 auto;
+      align-items: stretch;
+    }
+    .tier {
+      position: relative;
+      border: 1px solid rgba(240,235,224,0.16);
+      padding: 38px 30px;
+      display: flex; flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .tier:hover { border-color: rgba(240,235,224,0.45); transform: translateY(-4px); }
+    .tier.featured { border-color: var(--red); }
+    .tier-badge {
+      position: absolute; top: 0; right: 0;
+      background: var(--red); color: var(--cream);
+      font-size: 9px; letter-spacing: 0.16em;
+      padding: 5px 11px; text-transform: uppercase;
+    }
+    .tier-name {
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; opacity: 0.7;
+    }
+    .tier-price {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-style: italic; font-size: 40px;
+      margin: 16px 0 2px;
+    }
+    .tier-price small {
+      font-family: 'Neue Montreal', sans-serif;
+      font-style: normal; font-size: 13px; opacity: 0.5;
+    }
+    .tier ul {
+      list-style: none; margin: 26px 0 30px;
+      display: flex; flex-direction: column; gap: 13px;
+    }
+    .tier li {
+      position: relative; padding-left: 20px;
+      font-size: 13px; line-height: 1.45; opacity: 0.74;
+    }
+    .tier li::before {
+      content: '—'; position: absolute; left: 0;
+      color: var(--red); opacity: 0.85;
+    }
+    .tier .tier-btn {
+      margin-top: auto;
+      border: 1px solid var(--cream);
+      color: var(--cream); text-align: center;
+      padding: 12px 0; font-size: 11px;
+      letter-spacing: 0.14em; text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .tier .tier-btn:hover { background: var(--cream); color: var(--dark); }
+    .tier.featured .tier-btn { background: var(--red); border-color: var(--red); }
+    .tier.featured .tier-btn:hover { background: var(--cream); border-color: var(--cream); color: var(--dark); }
+
+    @media (max-width: 768px) {
+      .why { padding: 56px 20px; }
+      .stats { gap: 36px; }
+      .mv { grid-template-columns: 1fr; }
+      .mv > div { padding: 48px 24px; }
+      .inside { padding: 56px 20px; }
+      .inside-grid { grid-template-columns: 1fr; column-gap: 0; }
+      .pricing { padding: 56px 20px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -537,13 +734,13 @@
       <img src="logo-transparent.png" alt="Casa Culta">
     </div>
     <ul class="nav-links">
-      <li><a href="#spaces">ABOUT</a></li>
+      <li><a href="#about">ABOUT</a></li>
       <li><a href="#spaces">SPACES</a></li>
       <li><a href="#events">EVENTS</a></li>
       <li><a href="#membership">MEMBERSHIP</a></li>
       <li><a href="#">JOURNAL</a></li>
     </ul>
-    <a href="#membership" class="nav-apply">APPLY</a>
+    <a href="#pricing" class="nav-apply">APPLY</a>
     <button class="nav-hamburger" onclick="document.getElementById('drawer').classList.add('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -552,12 +749,12 @@
   <!-- MOBILE DRAWER -->
   <div class="nav-drawer" id="drawer">
     <button class="close-btn" onclick="document.getElementById('drawer').classList.remove('open')">&times;</button>
-    <a href="#" onclick="document.getElementById('drawer').classList.remove('open')">ABOUT</a>
+    <a href="#about" onclick="document.getElementById('drawer').classList.remove('open')">ABOUT</a>
     <a href="#spaces" onclick="document.getElementById('drawer').classList.remove('open')">SPACES</a>
     <a href="#events" onclick="document.getElementById('drawer').classList.remove('open')">EVENTS</a>
     <a href="#membership" onclick="document.getElementById('drawer').classList.remove('open')">MEMBERSHIP</a>
     <a href="#" onclick="document.getElementById('drawer').classList.remove('open')">JOURNAL</a>
-    <a href="#membership" onclick="document.getElementById('drawer').classList.remove('open')">APPLY</a>
+    <a href="#pricing" onclick="document.getElementById('drawer').classList.remove('open')">APPLY</a>
   </div>
 
   <!-- HERO -->
@@ -569,7 +766,7 @@
       <p class="headline-3">Not quite a members club.</p>
       <p class="hero-subtitle">THE THIRD SPACE FOR CREATIVE CONNECTION</p>
       <div class="hero-buttons">
-        <a href="#membership" class="btn-outline">APPLY FOR MEMBERSHIP</a>
+        <a href="#pricing" class="btn-outline">APPLY FOR MEMBERSHIP</a>
         <a href="#spaces" class="btn-ghost">EXPLORE THE SPACE &nbsp;→</a>
       </div>
     </div>
@@ -591,11 +788,45 @@
     </div>
   </section>
 
+  <!-- WHY / STATS -->
+  <section class="why">
+    <p class="why-lead">No one told us loneliness could look this <em>social</em>.</p>
+    <p class="why-sub">The data is unmistakable</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">68<span class="accent">%</span></div>
+        <div class="lbl">of adults report feeling lonely sometimes or always.</div>
+      </div>
+      <div class="stat">
+        <div class="num">15<span class="accent">×</span></div>
+        <div class="lbl">the daily health impact of chronic loneliness — comparable to smoking.</div>
+      </div>
+      <div class="stat">
+        <div class="num">1.7<span class="accent">M</span></div>
+        <div class="lbl">residents in Barcelona — many still searching for belonging.</div>
+      </div>
+    </div>
+  </section>
+
   <!-- TAGLINE BAND -->
   <div class="tagline-band">
     <h2>"A place where creatives find each other — and find themselves."</h2>
     <p>BARCELONA · EST. 2026</p>
   </div>
+
+  <!-- MISSION / VISION -->
+  <section class="mv" id="about">
+    <div class="mission">
+      <p class="eyebrow">Our Mission</p>
+      <h2>A space that celebrates raw creativity.</h2>
+      <p>Casa Culta brings together the city's creators, dreamers, and wanderers in a space that celebrates raw creativity. It's where collaboration happens naturally — through conversation, art, movement, and a shared love for making cool things happen.</p>
+    </div>
+    <div class="vision">
+      <p class="eyebrow">Our Vision</p>
+      <h2>Creativity, off the screen.</h2>
+      <p>To build a world where creativity doesn't live behind screens or in institutions, but in real, living moments. Casa Culta wants to redefine what community looks like: authentic, diverse, and always in motion.</p>
+    </div>
+  </section>
 
   <!-- SPACES -->
   <section class="spaces" id="spaces">
@@ -620,6 +851,38 @@
     </div>
   </section>
 
+  <!-- INSIDE THE CASA -->
+  <section class="inside">
+    <p class="section-label">Inside the Casa</p>
+    <div class="inside-grid">
+      <div class="inside-item">
+        <span class="idx">01</span>
+        <h4>Private Studios</h4>
+        <p>From resident artist studios to bookable creative spaces — designed for photographers, filmmakers, musicians, designers, writers, and makers.</p>
+      </div>
+      <div class="inside-item">
+        <span class="idx">02</span>
+        <h4>Communal Spaces</h4>
+        <p>Shared tables, lounge seating, and flexible environments designed to encourage conversation, collaboration, and discovery.</p>
+      </div>
+      <div class="inside-item">
+        <span class="idx">03</span>
+        <h4>Café &amp; Bar</h4>
+        <p>Specialty coffee by day. Wine, cocktails, and tapas by night.</p>
+      </div>
+      <div class="inside-item">
+        <span class="idx">04</span>
+        <h4>Performance &amp; Event Stage</h4>
+        <p>Workshops, screenings, talks, performances, and recurring community events.</p>
+      </div>
+      <div class="inside-item">
+        <span class="idx">05</span>
+        <h4>Creative Showcases</h4>
+        <p>Rotating exhibitions, installations, and opportunities for members to present and share their work.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- MEMBERSHIP CTA -->
   <section class="membership" id="membership">
     <div class="membership-img">
@@ -629,7 +892,55 @@
       <p class="eyebrow">Membership</p>
       <h2>A space that grows with you.</h2>
       <p>Casa Culta is open to artists, writers, designers, makers, and anyone who believes in the power of creative community. Membership gives you access to the space, the people, and the programming.</p>
-      <a href="#" class="btn-outline">APPLY FOR MEMBERSHIP</a>
+      <a href="#pricing" class="btn-outline">APPLY FOR MEMBERSHIP</a>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="section-head">
+      <h3>Choose your membership.</h3>
+      <p>Open to artists, writers, designers, makers &amp; the curious</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="tier">
+        <span class="tier-name">Community</span>
+        <div class="tier-price">€80<small>&nbsp;/ month</small></div>
+        <ul>
+          <li>Events &amp; workshops</li>
+          <li>Community platform</li>
+          <li>10% café discount</li>
+          <li>1 coffee per week</li>
+          <li>Partner perks</li>
+        </ul>
+        <a href="#" class="tier-btn">APPLY</a>
+      </div>
+      <div class="tier featured">
+        <span class="tier-badge">Most popular</span>
+        <span class="tier-name">Studio</span>
+        <div class="tier-price">€150<small>&nbsp;/ month</small></div>
+        <ul>
+          <li>Everything in Community</li>
+          <li>Shared studio access</li>
+          <li>Meeting room credits</li>
+          <li>Personal storage locker</li>
+          <li>Priority event booking</li>
+        </ul>
+        <a href="#" class="tier-btn">APPLY</a>
+      </div>
+      <div class="tier">
+        <span class="tier-name">Full Creative</span>
+        <div class="tier-price">€300<small>&nbsp;/ month</small></div>
+        <ul>
+          <li>Everything in Studio</li>
+          <li>Unlimited workspace access</li>
+          <li>Private studio booking credits</li>
+          <li>Guest passes</li>
+          <li>Complimentary drinks at select events</li>
+          <li>Exclusive dinners &amp; creative experiences</li>
+        </ul>
+        <a href="#" class="tier-btn">APPLY</a>
+      </div>
     </div>
   </section>
 
