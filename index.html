@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Culta</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── System fonts ─────────────────────────────────────────── */
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: local('Neue Montreal'), local('NeueMontreal-Regular'), local('NeueMontreal');
+      font-weight: 400; font-style: normal;
+    }
+    @font-face {
+      font-family: 'Morisawa Role';
+      src: local('Morisawa Role Serif Text Pro'), local('MorisawaRoleSerifTextPro-Regular');
+      font-weight: 400; font-style: italic;
+    }
+    @font-face {
+      font-family: 'Morisawa Bold';
+      src: local('Morisawa Role Serif Text Pro Bold'), local('MorisawaRoleSerifTextPro-Bold');
+      font-weight: 700; font-style: italic;
+    }
+
+    :root {
+      --cream: #f0ebe0;
+      --dark: #1c1d17;
+      --red: #8b2a16;
+      --gap: 6px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 44px;
+      background: linear-gradient(to bottom, rgba(20,20,14,0.82) 0%, transparent 100%);
+      backdrop-filter: blur(0px);
+      transition: background 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(20,20,14,0.95);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo img { height: 96px; display: block; }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 11.5px;
+      letter-spacing: 0.13em;
+      font-weight: 400;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-apply {
+      border: 1px solid var(--cream);
+      color: var(--cream);
+      padding: 9px 22px;
+      font-size: 11.5px;
+      letter-spacing: 0.13em;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .nav-apply:hover { background: var(--cream); color: var(--dark); }
+
+    /* hamburger – mobile only */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--cream); transition: all 0.3s;
+    }
+
+    /* mobile nav drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(20,20,14,0.97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      opacity: 0.85;
+    }
+    .nav-drawer a:hover { opacity: 1; }
+    .nav-drawer .close-btn {
+      position: absolute; top: 24px; right: 24px;
+      font-size: 28px; cursor: pointer; color: var(--cream);
+      background: none; border: none;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100%; height: 100vh;
+      min-height: 620px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('image copy.png') center 30% / cover no-repeat;
+      filter: brightness(0.52);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 65% 50%, transparent 25%, rgba(10,10,8,0.5) 100%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 140px 60px 40px;
+    }
+
+    .headline-1 {
+      font-family: 'Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: clamp(32px, 4.6vw, 60px);
+      font-weight: 400; font-style: normal;
+      line-height: 1.1; color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+    .headline-2 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+      font-size: clamp(32px, 4.6vw, 60px);
+      font-weight: 400; font-style: italic;
+      line-height: 1.1; color: var(--cream);
+      margin-top: 3px;
+    }
+    .headline-3 {
+      font-family: 'Morisawa Bold', 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(32px, 4.6vw, 60px);
+      font-weight: 700; font-style: italic;
+      line-height: 1.1; color: var(--cream);
+      margin-top: 3px;
+    }
+
+    /* circle overlay */
+    .circled {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .circled img.circle-img {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -52%);
+      width: 128%; height: 260%;
+      pointer-events: none;
+      object-fit: fill;
+      mix-blend-mode: screen;  /* black bg vanishes, red oval shows through */
+    }
+
+    .hero-subtitle {
+      margin-top: 22px;
+      font-size: 11px; letter-spacing: 0.22em;
+      font-weight: 400; opacity: 0.78;
+    }
+
+    .hero-buttons {
+      margin-top: 28px;
+      display: flex; align-items: center; gap: 24px;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      border: 1px solid var(--cream);
+      color: var(--cream);
+      padding: 13px 28px;
+      font-size: 11px; letter-spacing: 0.14em; font-weight: 400;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+      white-space: nowrap;
+    }
+    .btn-outline:hover { background: var(--cream); color: var(--dark); }
+
+    .btn-ghost {
+      color: var(--cream); font-size: 12px;
+      letter-spacing: 0.1em; font-weight: 400;
+      text-decoration: none; opacity: 0.78;
+      transition: opacity 0.2s;
+    }
+    .btn-ghost:hover { opacity: 1; }
+
+    /* ═══════════════════════════════════════════════════════════
+       THUMBNAIL STRIP
+    ═══════════════════════════════════════════════════════════ */
+    .thumbnail-strip {
+      position: relative; z-index: 2;
+      display: flex; gap: var(--gap);
+      height: 168px; flex-shrink: 0;
+      padding: 0 var(--gap) var(--gap);
+      background: var(--dark);
+    }
+
+    .thumbnail-strip figure {
+      flex: 1;
+      overflow: visible;     /* allow pop-up to not clip */
+      margin: 0;
+      cursor: pointer;
+      position: relative;
+      /* the box */
+      border: 1px solid rgba(240,235,224,0.55);
+      /* pop-up transition */
+      transition: transform 0.3s cubic-bezier(.22,.68,0,1.2),
+                  box-shadow 0.3s ease,
+                  border-color 0.3s ease;
+    }
+    .thumbnail-strip figure:hover {
+      transform: translateY(-10px);
+      border-color: rgba(240,235,224,0.95);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.6);
+      z-index: 10;
+    }
+
+    .thumbnail-strip figure .inner {
+      width: 100%; height: 100%; overflow: hidden;
+    }
+    .thumbnail-strip figure img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      filter: brightness(0.72) saturate(0.88);
+      transition: filter 0.35s, transform 0.45s;
+    }
+    .thumbnail-strip figure:hover img {
+      filter: brightness(0.95) saturate(1.05);
+      transform: scale(1.06);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTIONS BELOW HERO
+    ═══════════════════════════════════════════════════════════ */
+
+    /* ── TAGLINE BAND ──────────────────────────────────────── */
+    .tagline-band {
+      background: var(--cream);
+      color: var(--dark);
+      text-align: center;
+      padding: 56px 40px;
+    }
+    .tagline-band h2 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(26px, 3.5vw, 46px);
+      font-weight: 400; font-style: italic;
+      line-height: 1.3;
+      max-width: 860px; margin: 0 auto;
+    }
+    .tagline-band p {
+      margin-top: 16px;
+      font-size: 12px; letter-spacing: 0.18em;
+      opacity: 0.6;
+    }
+
+    /* ── SPACES GRID ───────────────────────────────────────── */
+    .spaces {
+      padding: 80px 44px;
+      background: var(--dark);
+    }
+    .section-label {
+      font-size: 10px; letter-spacing: 0.25em;
+      opacity: 0.5; margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+    .spaces-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .space-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(240,235,224,0.12);
+      aspect-ratio: 4 / 5;
+      transition: border-color 0.3s;
+    }
+    .space-card:first-child {
+      grid-row: span 2;
+      aspect-ratio: unset;
+    }
+    .space-card:hover { border-color: rgba(240,235,224,0.5); }
+
+    .space-card img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      filter: brightness(0.7);
+      transition: filter 0.4s, transform 0.5s;
+    }
+    .space-card:hover img {
+      filter: brightness(0.9);
+      transform: scale(1.04);
+    }
+    .space-card-label {
+      position: absolute; bottom: 16px; left: 16px;
+      font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; opacity: 0.75;
+    }
+
+    /* ── MEMBERSHIP CTA ────────────────────────────────────── */
+    .membership {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 480px;
+    }
+    .membership-img {
+      overflow: hidden;
+    }
+    .membership-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      display: block;
+      filter: brightness(0.75);
+    }
+    .membership-copy {
+      background: #141410;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 60px 52px;
+    }
+    .membership-copy .eyebrow {
+      font-size: 10px; letter-spacing: 0.28em;
+      opacity: 0.5; margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .membership-copy h2 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 400; font-style: italic;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .membership-copy p {
+      font-size: 14px; line-height: 1.7;
+      opacity: 0.7; max-width: 380px;
+      margin-bottom: 36px;
+    }
+
+    /* ── EVENTS ROW ────────────────────────────────────────── */
+    .events {
+      padding: 80px 44px;
+      background: var(--dark);
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .events-header {
+      display: flex; align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 36px;
+    }
+    .events-header h3 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(22px, 2.5vw, 34px);
+      font-weight: 400; font-style: italic;
+    }
+    .events-header a {
+      font-size: 11px; letter-spacing: 0.15em;
+      color: var(--cream); text-decoration: none; opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .events-header a:hover { opacity: 1; }
+
+    .events-list { display: flex; flex-direction: column; gap: 0; }
+    .event-row {
+      display: flex; align-items: center;
+      gap: 28px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(240,235,224,0.1);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .event-row:hover { opacity: 0.7; }
+    .event-date {
+      font-size: 11px; letter-spacing: 0.12em;
+      opacity: 0.45; min-width: 72px;
+    }
+    .event-name {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px; font-style: italic;
+      flex: 1;
+    }
+    .event-type {
+      font-size: 10px; letter-spacing: 0.2em;
+      opacity: 0.4; text-transform: uppercase;
+    }
+    .event-arrow { opacity: 0.35; font-size: 14px; }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: #0e0f0a;
+      padding: 60px 44px 36px;
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .footer-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 40px;
+      margin-bottom: 48px;
+    }
+    .footer-logo img { height: 72px; }
+
+    .footer-links {
+      display: flex; gap: 60px; flex-wrap: wrap;
+    }
+    .footer-col h4 {
+      font-size: 10px; letter-spacing: 0.22em;
+      opacity: 0.4; margin-bottom: 16px; text-transform: uppercase;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      color: var(--cream); text-decoration: none;
+      font-size: 13px; opacity: 0.65; transition: opacity 0.2s;
+    }
+    .footer-col a:hover { opacity: 1; }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .footer-bottom p { font-size: 11px; opacity: 0.3; letter-spacing: 0.06em; }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a {
+      font-size: 11px; letter-spacing: 0.12em;
+      color: var(--cream); text-decoration: none; opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+    .footer-social a:hover { opacity: 0.9; }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE — MOBILE
+    ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-logo img { height: 68px; }
+      .nav-links, .nav-apply { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero-content {
+        padding: 120px 24px 32px;
+      }
+
+      .thumbnail-strip {
+        height: auto;
+        padding: 0 var(--gap) var(--gap);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 120px 120px;
+      }
+      .thumbnail-strip figure {
+        /* override pop-up slightly for mobile */
+      }
+      .thumbnail-strip figure:hover {
+        transform: translateY(-6px);
+      }
+
+      .tagline-band { padding: 44px 24px; }
+
+      .spaces { padding: 56px 20px; }
+      .spaces-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .space-card:first-child { grid-row: span 1; aspect-ratio: 4/3; }
+      .space-card { aspect-ratio: 4/3; }
+
+      .membership { grid-template-columns: 1fr; }
+      .membership-img { height: 280px; }
+      .membership-copy { padding: 44px 24px; }
+
+      .events { padding: 56px 20px; }
+      .event-name { font-size: 17px; }
+      .event-type { display: none; }
+
+      footer { padding: 48px 20px 28px; }
+      .footer-top { flex-direction: column; }
+      .footer-links { gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .headline-1, .headline-2, .headline-3 {
+        font-size: clamp(28px, 8vw, 40px);
+      }
+      .hero-buttons { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-logo">
+      <img src="logo-transparent.png" alt="Casa Culta">
+    </div>
+    <ul class="nav-links">
+      <li><a href="#spaces">ABOUT</a></li>
+      <li><a href="#spaces">SPACES</a></li>
+      <li><a href="#events">EVENTS</a></li>
+      <li><a href="#membership">MEMBERSHIP</a></li>
+      <li><a href="#">JOURNAL</a></li>
+    </ul>
+    <a href="#membership" class="nav-apply">APPLY</a>
+    <button class="nav-hamburger" onclick="document.getElementById('drawer').classList.add('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-drawer" id="drawer">
+    <button class="close-btn" onclick="document.getElementById('drawer').classList.remove('open')">&times;</button>
+    <a href="#" onclick="document.getElementById('drawer').classList.remove('open')">ABOUT</a>
+    <a href="#spaces" onclick="document.getElementById('drawer').classList.remove('open')">SPACES</a>
+    <a href="#events" onclick="document.getElementById('drawer').classList.remove('open')">EVENTS</a>
+    <a href="#membership" onclick="document.getElementById('drawer').classList.remove('open')">MEMBERSHIP</a>
+    <a href="#" onclick="document.getElementById('drawer').classList.remove('open')">JOURNAL</a>
+    <a href="#membership" onclick="document.getElementById('drawer').classList.remove('open')">APPLY</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="headline-1">Not quite a cafe.</p>
+      <p class="headline-2">Not quite a studio.</p>
+      <p class="headline-3">Not quite a members club.</p>
+      <p class="hero-subtitle">THE THIRD SPACE FOR CREATIVE CONNECTION</p>
+      <div class="hero-buttons">
+        <a href="#membership" class="btn-outline">APPLY FOR MEMBERSHIP</a>
+        <a href="#spaces" class="btn-ghost">EXPLORE THE SPACE &nbsp;→</a>
+      </div>
+    </div>
+
+    <!-- THUMBNAIL STRIP -->
+    <div class="thumbnail-strip">
+      <figure>
+        <div class="inner"><img src="image 2.png" alt="Vinyl room"></div>
+      </figure>
+      <figure>
+        <div class="inner"><img src="_-62.jpg" alt="Social gathering" style="object-position:center top;"></div>
+      </figure>
+      <figure>
+        <div class="inner"><img src="image 5.png" alt="Workshop" style="object-position:center 30%;"></div>
+      </figure>
+      <figure>
+        <div class="inner"><img src="image 8.png" alt="Lounge" style="object-position:center top;"></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- TAGLINE BAND -->
+  <div class="tagline-band">
+    <h2>"A place where creatives find each other — and find themselves."</h2>
+    <p>LONDON · EST. 2023</p>
+  </div>
+
+  <!-- SPACES -->
+  <section class="spaces" id="spaces">
+    <p class="section-label">Our Spaces</p>
+    <div class="spaces-grid">
+      <div class="space-card">
+        <img src="image 3.png" alt="Main Hall" style="object-position:center 20%;">
+        <span class="space-card-label">Main Hall</span>
+      </div>
+      <div class="space-card">
+        <img src="image 2.png" alt="Vinyl Room">
+        <span class="space-card-label">Vinyl Room</span>
+      </div>
+      <div class="space-card">
+        <img src="image.png" alt="Studio" style="object-position:center top;">
+        <span class="space-card-label">Studio</span>
+      </div>
+      <div class="space-card">
+        <img src="image 6.png" alt="Lounge" style="object-position:center 20%;">
+        <span class="space-card-label">Lounge</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP CTA -->
+  <section class="membership" id="membership">
+    <div class="membership-img">
+      <img src="image 5.png" alt="Membership" style="object-position:center 20%;">
+    </div>
+    <div class="membership-copy">
+      <p class="eyebrow">Membership</p>
+      <h2>A space that grows with you.</h2>
+      <p>Casa Culta is open to artists, writers, designers, makers, and anyone who believes in the power of creative community. Membership gives you access to the space, the people, and the programming.</p>
+      <a href="#" class="btn-outline">APPLY FOR MEMBERSHIP</a>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="events" id="events">
+    <div class="events-header">
+      <h3>Upcoming Events</h3>
+      <a href="#">VIEW ALL →</a>
+    </div>
+    <div class="events-list">
+      <div class="event-row">
+        <span class="event-date">JUN 07</span>
+        <span class="event-name">Open Studio Night</span>
+        <span class="event-type">Workshop</span>
+        <span class="event-arrow">→</span>
+      </div>
+      <div class="event-row">
+        <span class="event-date">JUN 14</span>
+        <span class="event-name">Flower Arrangement with Carmen</span>
+        <span class="event-type">Craft</span>
+        <span class="event-arrow">→</span>
+      </div>
+      <div class="event-row">
+        <span class="event-date">JUN 21</span>
+        <span class="event-name">Members Social — Summer Edition</span>
+        <span class="event-type">Social</span>
+        <span class="event-arrow">→</span>
+      </div>
+      <div class="event-row">
+        <span class="event-date">JUN 28</span>
+        <span class="event-name">Photography & Darkroom Intro</span>
+        <span class="event-type">Workshop</span>
+        <span class="event-arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="logo-transparent.png" alt="Casa Culta">
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Spaces</a></li>
+            <li><a href="#">Journal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="#">Membership</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Apply</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#">hello@casaculta.com</a></li>
+            <li><a href="#">London, UK</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Casa Culta. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="#">INSTAGRAM</a>
+        <a href="#">SUBSTACK</a>
+        <a href="#">TIKTOK</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  </script>
+
+</body>
+</html>
