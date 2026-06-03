@@ -609,30 +609,95 @@
       background: #141410;
       border-top: 1px solid rgba(240,235,224,0.08);
     }
-    .inside-grid {
+    .inside-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 64px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
-    .inside-item {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 6px 18px;
-      padding: 26px 0;
-      border-bottom: 1px solid rgba(240,235,224,0.1);
+    .icard {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(240,235,224,0.12);
+      aspect-ratio: 4 / 5;
+      transition: border-color 0.3s;
     }
-    .inside-item .idx {
-      font-size: 12px; opacity: 0.4;
-      letter-spacing: 0.1em; padding-top: 3px;
+    .icard:first-child { grid-column: span 2; aspect-ratio: unset; }
+    .icard:hover { border-color: rgba(240,235,224,0.5); }
+    .icard img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: brightness(0.58);
+      transition: filter 0.4s, transform 0.5s;
     }
-    .inside-item h4 {
+    .icard:hover img { filter: brightness(0.82); transform: scale(1.04); }
+    .icard .cap {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 24px 22px;
+      background: linear-gradient(to top, rgba(8,8,6,0.9) 0%, transparent 100%);
+    }
+    .icard h4 {
       font-size: 13px; letter-spacing: 0.16em;
       text-transform: uppercase; font-weight: 400;
     }
-    .inside-item p {
-      grid-column: 2;
-      font-size: 13px; line-height: 1.65;
-      opacity: 0.58; margin-top: 8px;
+    .icard p {
+      font-size: 12px; line-height: 1.55;
+      opacity: 0.72; margin-top: 7px; max-width: 360px;
+    }
+
+    /* ── LIFE MARQUEE ── */
+    .marquee {
+      padding: 84px 0;
+      background: var(--dark);
+      border-top: 1px solid rgba(240,235,224,0.08);
+      overflow: hidden;
+    }
+    .marquee .section-label { padding: 0 44px; }
+    .marquee-track {
+      display: flex; gap: 12px; width: max-content;
+      animation: marquee-scroll 60s linear infinite;
+    }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track img {
+      height: 300px; width: auto;
+      object-fit: cover; flex: 0 0 auto;
+      filter: brightness(0.82) saturate(0.95);
+    }
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── BRAND / EVIL EYE ── */
+    .brand {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      background: #141410;
+      border-top: 1px solid rgba(240,235,224,0.08);
+    }
+    .brand-img { overflow: hidden; min-height: 420px; }
+    .brand-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: brightness(0.85);
+    }
+    .brand-copy {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 56px;
+    }
+    .brand-copy .eyebrow {
+      font-size: 10px; letter-spacing: 0.28em;
+      opacity: 0.5; margin-bottom: 22px; text-transform: uppercase;
+    }
+    .brand-copy h2 {
+      font-family: 'Morisawa Role', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 400; font-style: italic;
+      line-height: 1.2; margin-bottom: 20px;
+    }
+    .brand-copy p {
+      font-size: 15px; line-height: 1.75;
+      opacity: 0.74; max-width: 460px;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -720,9 +785,17 @@
       .mv { grid-template-columns: 1fr; }
       .mv > div { padding: 48px 24px; }
       .inside { padding: 56px 20px; }
-      .inside-grid { grid-template-columns: 1fr; column-gap: 0; }
+      .inside-cards { grid-template-columns: 1fr; }
+      .icard:first-child { grid-column: span 1; }
+      .icard { aspect-ratio: 4 / 3; }
       .pricing { padding: 56px 20px; }
       .pricing-grid { grid-template-columns: 1fr; }
+      .marquee { padding: 56px 0; }
+      .marquee .section-label { padding: 0 20px; }
+      .marquee-track img { height: 200px; }
+      .brand { grid-template-columns: 1fr; }
+      .brand-img { min-height: 260px; }
+      .brand-copy { padding: 44px 24px; }
     }
   </style>
 </head>
@@ -828,6 +901,18 @@
     </div>
   </section>
 
+  <!-- BRAND / EVIL EYE -->
+  <section class="brand">
+    <div class="brand-img">
+      <img src="evil-eye.jpg" alt="Mediterranean evil eye">
+    </div>
+    <div class="brand-copy">
+      <p class="eyebrow">The Symbol</p>
+      <h2>Protected by the eye.</h2>
+      <p>Our mark is inspired by the Mediterranean evil eye — a symbol of protection and connection. Tradition holds its good fortune is strongest when gifted by another person: a reflection of Casa Culta's belief that the most meaningful opportunities, friendships, and collaborations come through community.</p>
+    </div>
+  </section>
+
   <!-- SPACES -->
   <section class="spaces" id="spaces">
     <p class="section-label">Our Spaces</p>
@@ -854,32 +939,51 @@
   <!-- INSIDE THE CASA -->
   <section class="inside">
     <p class="section-label">Inside the Casa</p>
-    <div class="inside-grid">
-      <div class="inside-item">
-        <span class="idx">01</span>
-        <h4>Private Studios</h4>
-        <p>From resident artist studios to bookable creative spaces — designed for photographers, filmmakers, musicians, designers, writers, and makers.</p>
+    <div class="inside-cards">
+      <div class="icard">
+        <img src="inside-communal.jpg" alt="Communal Spaces">
+        <div class="cap">
+          <h4>Communal Spaces</h4>
+          <p>Shared tables, lounge seating, and flexible environments built to spark conversation, collaboration, and discovery.</p>
+        </div>
       </div>
-      <div class="inside-item">
-        <span class="idx">02</span>
-        <h4>Communal Spaces</h4>
-        <p>Shared tables, lounge seating, and flexible environments designed to encourage conversation, collaboration, and discovery.</p>
+      <div class="icard">
+        <img src="inside-studio.jpg" alt="Private Studios">
+        <div class="cap">
+          <h4>Private Studios</h4>
+          <p>Resident and bookable creative spaces for photographers, filmmakers, musicians, designers, writers, and makers.</p>
+        </div>
       </div>
-      <div class="inside-item">
-        <span class="idx">03</span>
-        <h4>Café &amp; Bar</h4>
-        <p>Specialty coffee by day. Wine, cocktails, and tapas by night.</p>
+      <div class="icard">
+        <img src="inside-cafe.jpg" alt="Café &amp; Bar">
+        <div class="cap">
+          <h4>Café &amp; Bar</h4>
+          <p>Specialty coffee by day. Wine, cocktails, and tapas by night.</p>
+        </div>
       </div>
-      <div class="inside-item">
-        <span class="idx">04</span>
-        <h4>Performance &amp; Event Stage</h4>
-        <p>Workshops, screenings, talks, performances, and recurring community events.</p>
+      <div class="icard">
+        <img src="inside-stage.jpg" alt="Performance &amp; Event Stage">
+        <div class="cap">
+          <h4>Performance &amp; Event Stage</h4>
+          <p>Workshops, screenings, talks, performances, and recurring community events.</p>
+        </div>
       </div>
-      <div class="inside-item">
-        <span class="idx">05</span>
-        <h4>Creative Showcases</h4>
-        <p>Rotating exhibitions, installations, and opportunities for members to present and share their work.</p>
+      <div class="icard">
+        <img src="inside-showcase.jpg" alt="Creative Showcases">
+        <div class="cap">
+          <h4>Creative Showcases</h4>
+          <p>Rotating exhibitions, installations, and chances for members to present and share their work.</p>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- LIFE MARQUEE -->
+  <section class="marquee">
+    <p class="section-label">Life at Casa Culta</p>
+    <div class="marquee-track">
+      <img src="life-01.jpg" alt=""><img src="life-02.jpg" alt=""><img src="life-03.jpg" alt=""><img src="life-04.jpg" alt=""><img src="life-05.jpg" alt=""><img src="life-06.jpg" alt=""><img src="life-07.jpg" alt=""><img src="life-08.jpg" alt=""><img src="life-09.jpg" alt=""><img src="life-10.jpg" alt="">
+      <img src="life-01.jpg" alt=""><img src="life-02.jpg" alt=""><img src="life-03.jpg" alt=""><img src="life-04.jpg" alt=""><img src="life-05.jpg" alt=""><img src="life-06.jpg" alt=""><img src="life-07.jpg" alt=""><img src="life-08.jpg" alt=""><img src="life-09.jpg" alt=""><img src="life-10.jpg" alt="">
     </div>
   </section>
 
